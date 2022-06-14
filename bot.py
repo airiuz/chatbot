@@ -25,7 +25,8 @@ async def command_start_handler(message: Message) -> None:
     # or call API method directly via Bot instance: `bot.send_message(chat_id=message.chat.id, ...)`
 
     #await message.answer(f"Assalomu alaykum, <b>{message.from_user.full_name}!</b>\nMenga habar yuboring va men sizga gapirib beraman.\bMenga ovoz yuboring va men text qilib beraman.")
-
+    global x
+    x = True
     data = get_audio(f"Assalomu alaykum, hurmatli mijoz. Mening ismim Oyqiz. Sizning ismingiz kim?")
     audio = Audio(data=data, rate=48000).data
     audio_file = BufferedInputFile(audio, filename="file.wav")
