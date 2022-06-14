@@ -13,7 +13,6 @@ dp = Dispatcher()
 
 logger = logging.getLogger(__name__)
 
-x = True
 @dp.message(commands=["start"])
 async def command_start_handler(message: Message) -> None:
     """
@@ -40,18 +39,15 @@ async def echo_handler(message: types.Message, bot: Bot) -> None:
 
     By default message handler will handle all message types (like text, photo, sticker and etc.)
     """
-    global x
     if message.voice:
         #print('Got voice message')
         text = await recognize(message.voice, bot)
-        if x:
-            text = text.split()
-            if text[-1]=="man":
-                text = text[-2]
-            else:
-                text = text[-1]
-            text = "Tanishganimdan xursandman" + text
-            x = False
+        text = text.split()
+        if text[-1]=="man":
+            text = text[-2]
+        else:
+            text = text[-1]
+        text = "Tanishganimdan xursandman" + text
         #print(f'Recognized text: {text}')
         #await message.answer(text)
 
