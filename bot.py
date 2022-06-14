@@ -13,7 +13,7 @@ dp = Dispatcher()
 
 logger = logging.getLogger(__name__)
 
-
+x = True
 @dp.message(commands=["start"])
 async def command_start_handler(message: Message) -> None:
     """
@@ -26,7 +26,7 @@ async def command_start_handler(message: Message) -> None:
 
     #await message.answer(f"Assalomu alaykum, <b>{message.from_user.full_name}!</b>\nMenga habar yuboring va men sizga gapirib beraman.\bMenga ovoz yuboring va men text qilib beraman.")
 
-    data = get_audio(f"Assalomu alaykum, {message.from_user.full_name}. Mening ismim Oyqiz. Sizning ismingiz kim?")
+    data = get_audio(f"Assalomu alaykum, hurmatli mijoz. Mening ismim Oyqiz. Sizning ismingiz kim?")
     audio = Audio(data=data, rate=48000).data
     audio_file = BufferedInputFile(audio, filename="file.wav")
     await message.answer_voice(audio_file)
@@ -42,13 +42,16 @@ async def echo_handler(message: types.Message, bot: Bot) -> None:
 
     if message.voice:
         #print('Got voice message')
+        global x
         text = await recognize(message.voice, bot)
-        text = text.split()
-        if text[-1]=="man":
-            text = text[-2]
-        else:
-            text = text[-1]
-        text = "Tanishganimdan xursandman" + text
+        if x:
+            text = text.split()
+            if text[-1]=="man":
+                text = text[-2]
+            else:
+                text = text[-1]
+            text = "Tanishganimdan xursandman" + text
+            x = False
         #print(f'Recognized text: {text}')
         #await message.answer(text)
 
