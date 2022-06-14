@@ -44,14 +44,14 @@ async def echo_handler(message: types.Message, bot: Bot) -> None:
         #print('Got voice message')
         text = await recognize(message.voice, bot)
         #print(f'Recognized text: {text}')
-        await message.answer(text)
+        #await message.answer(text)
 
         data = get_audio(text)
         audio = Audio(data=data, rate=48000).data
         audio_file = BufferedInputFile(audio, filename="file.wav")
         await message.answer_voice(audio_file)
     if message.text:
-        print(f'Got text message: {message.text}')
+        #print(f'Got text message: {message.text}')
         data = get_audio(message.text)
         audio = Audio(data=data, rate=48000).data
         audio_file = BufferedInputFile(audio, filename="file.wav")
