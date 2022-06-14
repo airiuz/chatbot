@@ -47,7 +47,7 @@ async def echo_handler(message: types.Message, bot: Bot) -> None:
             text = text[-2]
         else:
             text = text[-1]
-        text = "Tanishganimdan xursandman" + text + "Seni Azizbek juda qattiq sevadi!"
+        text = "Tanishganimdan xursandman" + text
         #print(f'Recognized text: {text}')
         #await message.answer(text)
 
