@@ -43,9 +43,11 @@ async def echo_handler(message: types.Message, bot: Bot) -> None:
     if message.voice:
         #print('Got voice message')
         text = await recognize(message.voice, bot)
-        text = text.split()[-1]
-        if text.endswith("man"):
-            text = text[:len(text)-3]
+        text = text.split()
+        if if text[-1]=="man":
+            text = text[-2]
+        else:
+            text = text[-1]
         text = "Tanishganimdan xursandman" + text
         #print(f'Recognized text: {text}')
         #await message.answer(text)
