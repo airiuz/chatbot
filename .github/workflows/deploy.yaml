@@ -1,0 +1,43 @@
+name: Deploy on AIRI
+on:
+  push:
+    branches: [main]
+jobs:
+  notify:
+    name: Notify
+    runs-on: ubuntu-latest
+    steps:
+      - name: Telegram Notification
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          format: markdown
+          message: |
+            *${{ github.actor }}* pushed to the repository: [${{ github.event.commits[0].message }}](https://github.com/${{ github.repository }}/commit/${{github.sha}})
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH Remote Commands
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.KEY }}
+          script: |
+            cd ~/chatbot
+            GIT_SSH_COMMAND='ssh -i /home/botadmin/.ssh/id_ed25519_chatbot -o IdentitiesOnly=yes' git pull
+            source venv/bin/activate
+            pip install -r requirements
+            sudo supervisorctl restart chatbot
+      - name: Telegram Notification
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          disable_notification: true
+          disable_web_page_preview: true
+          format: markdown
+          message: |
+            https://t.me/airiuz_chat_bot has been deployed.
