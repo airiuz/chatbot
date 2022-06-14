@@ -44,7 +44,7 @@ async def echo_handler(message: types.Message, bot: Bot) -> None:
         #print('Got voice message')
         text = await recognize(message.voice, bot)
         text = text.split()
-        if if text[-1]=="man":
+        if text[-1]=="man":
             text = text[-2]
         else:
             text = text[-1]
