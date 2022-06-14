@@ -40,10 +40,9 @@ async def echo_handler(message: types.Message, bot: Bot) -> None:
 
     By default message handler will handle all message types (like text, photo, sticker and etc.)
     """
-
+    global x
     if message.voice:
         #print('Got voice message')
-        global x
         text = await recognize(message.voice, bot)
         if x:
             text = text.split()
